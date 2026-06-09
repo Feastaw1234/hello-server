@@ -1,6 +1,7 @@
 package com.stu212306158.helloserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.stu212306158.helloserver.common.Result;
 import com.stu212306158.helloserver.common.ResultCode;
 import com.stu212306158.helloserver.dto.UserDTO;
@@ -77,5 +78,14 @@ public class UserServiceImpl implements UserService {
         }
         String data = "查询成功,正在返回ID为" + id + "的用户信息";
         return Result.success(data);
+    }
+    @Override
+    public Result<Object> getUserPage(Integer pageNum, Integer pageSize) {
+        // 1. 创建分页对象：当前页、每页条数
+        Page<User> pageParam = new Page<>(pageNum, pageSize);
+        // 2. 执行分页查询（null = 无条件查询全部）
+        Page<User> resultPage = userMapper.selectPage(pageParam, null);
+        // 3. 封装分页结果返回
+        return Result.success(resultPage);
     }
 }
