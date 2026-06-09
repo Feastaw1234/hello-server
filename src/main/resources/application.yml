@@ -1,13 +1,18 @@
 spring.application.name=hello-server
 spring:
-  # ???????
+  # ?????????
   datasource:
-    url: jdbc:postgresql://localhost:5432/lab_db  # ?????/??/??
-    username: postgres                            # ??PostgreSQL??
-    password: 212306158                       # ?????????
-    driver-class-name: org.postgresql.Driver       # PostgreSQL???
+    url: jdbc:postgresql://localhost:5432/lab_db
+    username: postgres
+    password: 212306158
+    driver-class-name: org.postgresql.Driver
+  # Redis ??
+  data:
+    redis:
+      host: 127.0.0.1   # ??Redis??
+      port: 6379        # Redis????
+      database: 0       # ???0??
 
-# MyBatis-Plus ??
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # ????????SQL
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

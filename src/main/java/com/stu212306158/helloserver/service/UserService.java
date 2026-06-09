@@ -9,4 +9,6 @@ public interface UserService {
     Result<String> getUserById(Long id);
     // 新增：分页查询用户列表
     Result<Object> getUserPage(Integer pageNum, Integer pageSize);
+    // 新增：查询用户详情（多表+缓存）
+    Result<UserDetailVO> getUserDetail(Long userId);
 }
