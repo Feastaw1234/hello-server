@@ -27,6 +27,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -34,30 +36,22 @@ public class UserServiceImpl implements UserService {
     private static final String CACHE_KEY_PREFIX = "user:detail:";
 
     @Override
-    public Result<UserDetailVO> getUserDetail(Long userId) {
-        String cacheKey = CACHE_KEY_PREFIX + userId;
+    public Result<String> login(UserDTO userDTO) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(User::getUsername, userDTO.getUsername());
+        User dbUser = userMapper.selectOne(queryWrapper);
 
-        String jsonStr = stringRedisTemplate.opsForValue().get(cacheKey);
-        if (jsonStr != null && !jsonStr.isBlank()) {
-            UserDetailVO vo = JSONUtil.toBean(jsonStr, UserDetailVO.class);
-            return Result.success(vo);
-        }
-
-        UserDetailVO detail = userInfoMapper.getUserDetail(userId);
-        if (detail == null) {
+        if (dbUser == null) {
             return Result.error(ResultCode.USER_NOT_EXIST);
         }
+        if (!dbUser.getPassword().equals(userDTO.getPassword())) {
+            return Result.error(ResultCode.PASSWORD_ERROR);
+        }
 
-        stringRedisTemplate.opsForValue().set(
-                cacheKey,
-                JSONUtil.toJsonStr(detail),
-                10,
-                TimeUnit.MINUTES
-        );
-
-        return Result.success(detail);
+        // 登录成功，生成JWT返回
+        String token = jwtUtil.generateToken(userDTO.getUsername());
+        return Result.success(token);
     }
-
     @Override
     @Transactional
     public Result<String> updateUserInfo(Long userId, UserInfo userInfo) {

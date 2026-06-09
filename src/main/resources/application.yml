@@ -13,6 +13,11 @@ spring:
       port: 6379        # Redis????
       database: 0       # ???0??
 
-mybatis-plus:
+  mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # JWT ??
+  security:
+    jwt:
+      secret: demo-jwt-secret-key-for-spring-security-2026  # ????
+      expiration-millis: 7200000  # ???? 2??(??)
