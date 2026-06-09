@@ -1,43 +1,35 @@
 package com.stu212306158.helloserver.entity;
 
-/*
- * 基础用户实体类
- */
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+// 映射数据库表 sys_user
+@TableName("sys_user")
 public class User {
-    // 用户ID
+    // 主键自增
+    @TableId(type = IdType.AUTO)
     private Long id;
-    // 用户名
-    private String name;
-    // 年龄
-    private Integer age;
+    private String username;
+    private String password;
 
-    // 无参构造方法（Spring 反射实例化必须）
-    public User() {}
-
-    // 全参构造方法（方便手动创建对象）
-    public User(Long id, String name, Integer age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
-
-    // Getter & Setter：属性的读写方法，@RequestBody 依赖此方法
+    // Getter & Setter
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
-    public Integer getAge() {
-        return age;
+    public String getPassword() {
+        return password;
     }
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

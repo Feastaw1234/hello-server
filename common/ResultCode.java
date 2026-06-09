@@ -9,6 +9,9 @@ public enum ResultCode {
     ERROR(500,"系统繁忙,请稍后再试"),
     // 权限/Token状态码
     TOKEN_INVALID(401,"登录凭证已缺失或过期,请重新登录");
+    USER_HAS_EXISTED(4001,"该用户名已被注册"),
+    USER_NOT_EXIST(4002,"该用户不存在"),
+    PASSWORD_ERROR(4003,"账号或密码错误");
 
     // 状态码
     private final Integer code;
