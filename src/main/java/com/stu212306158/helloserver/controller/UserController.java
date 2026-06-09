@@ -9,25 +9,24 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    // 自动注入业务层
     @Autowired
     private UserService userService;
 
-    // 注册接口
+    // 注册
     @PostMapping
     public Result<String> register(@RequestBody UserDTO userDTO) {
         return userService.register(userDTO);
     }
 
-    // 登录接口
+    // 登录
     @PostMapping("/login")
     public Result<String> login(@RequestBody UserDTO userDTO) {
         return userService.login(userDTO);
     }
 
-    // 查询接口（受拦截器保护）
+    // 根据ID查询用户
     @GetMapping("/{id}")
     public Result<String> getUser(@PathVariable Long id) {
-        return Result.success("查询成功,ID:" + id);
+        return userService.getUserById(id);
     }
 }

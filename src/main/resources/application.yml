@@ -1,0 +1,13 @@
+spring.application.name=hello-server
+spring:
+  # ???????
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lab_db  # ?????/??/??
+    username: postgres                            # ??PostgreSQL??
+    password: 212306158                       # ?????????
+    driver-class-name: org.postgresql.Driver       # PostgreSQL???
+
+# MyBatis-Plus ??
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # ????????SQL
